@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+<body>
+  <div id="docs">
+    <h1>DOCUMENTATION</h1>
+    <hr />
+
+    <div id="todoLists">
+      <h2>TODO LIST</h2>
+      <div id="todoListIndex">
+        <h3>INDEX</h3>
+        <strong>List of todo lists</strong>
+        <br />
+        <code>GET /todo_lists</code>
+        <div id="todoListIndexExample"></div>
+      </div>
+      <div id="todoListIndex">
+        <h3>SHOW</h3>
+        <strong>Get todo list by id</strong>
+        <br />
+        <code>GET /todo_lists/:id</code>
+        <code id="todoListShowExample"></code>
+      </div>
+    </div>
+    <div id="todos">
+      <h2>TODO</h2>
+      <div id="todoIndex">
+        <h3>INDEX</h3>
+        <strong>List of todos</strong>
+        <br />
+        <code>GET /todos</code>
+        <div id="todoListIndexExample"></div>
+      </div>
+      <div id="todoListIndex">
+        <h3>SHOW</h3>
+        <strong>Get todo by id</strong>
+        <br />
+        <code>GET /todo/:id</code>
+        <code id="todoShowExample"></code>
+      </div>
+    </div>
+  <div>
+
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    function appendToExample(statusText, domId) {
+      if (statusText === 'success') {
+        var dom = $('#'+domId);
+        return function(response) {
+          dom.text(JSON.stringify(response.data));
+        }
+       } else {
+        return function(error) {
+          dom.text(error.response.data);
+        }
+      }
+    }
+
+    var docExamples = [
+      { id: 'todoListIndexExample', url: '/todo_lists' },
+      { id: 'todoListShowExample', url: '/todo_lists/2' },
+    ];
+
+    for (var i = 0; i < docExamples.length; i++) {
+      var example = docExamples[i];
+      var url = example.url;
+      var domId = example.id;
+      $.ajax({
+        url: url,
+      }).then(appendToExample('success', domId), appendToExample('error', domId));
+    }
+  </script>
+</body>
+</html>
